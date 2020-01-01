@@ -195,7 +195,7 @@ class FlutterI18n {
     }
   }
 
-  Future<Locale> _findDeviceLocale() async {
+  Future<String> _findDeviceLocale() async {
     String currentLocale;
 
     try {
