@@ -7,6 +7,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:yaml/yaml.dart';
+import 'package:devicelocale/devicelocale.dart';
 
 class FlutterI18n {
   static RegExp _parameterRegexp = new RegExp("{(.+)}");
@@ -65,7 +66,7 @@ class FlutterI18n {
   }
 
   Future<Locale> _findCurrentLocale() async {
-    final String systemLocale = await findSystemLocale();
+    final String systemLocale = await _findDeviceLocale();
     _printDebugMessage("The system locale is $systemLocale");
     final List<String> systemLocaleSplitted = systemLocale.split("_");
     final int countryCodeIndex = systemLocaleSplitted.length == 3 ? 2 : 1;
@@ -192,5 +193,18 @@ class FlutterI18n {
     if(!Foundation.kReleaseMode) {
       print(message);
     }
+  }
+
+  Future<Locale> _findDeviceLocale() async {
+    String currentLocale;
+
+    try {
+      currentLocale = await Devicelocale.currentLocale;
+      print(currentLocale);
+    } on PlatformException {
+      print("Error obtaining current locale");
+    }
+    return currentLocale
+
   }
 }
