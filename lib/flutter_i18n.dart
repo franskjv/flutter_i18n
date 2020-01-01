@@ -204,7 +204,7 @@ class FlutterI18n {
     } on PlatformException {
       print("Error obtaining current locale");
     }
-    return currentLocale
+    return currentLocale;
 
   }
 }
